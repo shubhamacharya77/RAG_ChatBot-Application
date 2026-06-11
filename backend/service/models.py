@@ -1,10 +1,9 @@
 from langchain_groq import ChatGroq 
 from langchain_huggingface import ChatHuggingFace,HuggingFaceEndpoint,HuggingFaceEmbeddings
-from service.request_schema import Classification_schema
-from service.tools import *
+import os 
 from dotenv import load_dotenv
 load_dotenv()
-primary_llm=ChatGroq(
+primary_chat_model=ChatGroq(
     model=os.getenv("groq_chat_model"),
     api_key=os.getenv("GROQ_API_KEY")
 )
@@ -14,15 +13,9 @@ secondary_llm=HuggingFaceEndpoint(
      task="text-generation",
      huggingfacehub_api_token=os.getenv("HUGGING_FACE")
  )
-secondary_chatmodel=ChatHuggingFace(llm=secondary_llm).bind_tools([web_search])
+secondary_chat_model=ChatHuggingFace(llm=secondary_llm)
+chat_model=primary_chat_model.with_fallbacks([secondary_chat_model])
 
-primary_chat_model=primary_llm.bind_tools([web_search])
-
-classification_model=primary_llm.with_structured_output(Classification_schema)
-
-chatmodel=primary_chat_model.with_fallbacks([secondary_chatmodel])
-
-embedding_model=None
-HuggingFaceEmbeddings(
+embedding_model=HuggingFaceEmbeddings(
     model=os.getenv("huggingface_embedding_model")
  )

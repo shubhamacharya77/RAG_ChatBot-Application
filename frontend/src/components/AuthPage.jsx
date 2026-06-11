@@ -4,7 +4,7 @@ import './Auth.css';
 
 export default function AuthPage({ onLoginSuccess }) {
   const [isLogin, setIsLogin] = useState(true);
-  
+
   // Form fields
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -78,7 +78,7 @@ export default function AuthPage({ onLoginSuccess }) {
         const data = await loginUser({ email, password });
         showNotification('success', 'Logged in successfully!');
         console.log('Login Response:', data);
-        
+
         if (onLoginSuccess) {
           onLoginSuccess({
             email,
@@ -120,8 +120,8 @@ export default function AuthPage({ onLoginSuccess }) {
           </div>
           <h1>{isLogin ? 'Welcome Back' : 'Create Account'}</h1>
           <p className="subtitle">
-            {isLogin 
-              ? 'Enter your credentials to access your chat space' 
+            {isLogin
+              ? 'Enter your credentials to access your chat space'
               : 'Sign up to connect with others in real-time'}
           </p>
         </div>
@@ -190,8 +190,8 @@ export default function AuthPage({ onLoginSuccess }) {
           )}
 
           {/* Submit button */}
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className={`auth-btn ${loading ? 'loading' : ''}`}
             disabled={loading}
           >
@@ -208,8 +208,8 @@ export default function AuthPage({ onLoginSuccess }) {
           <span>
             {isLogin ? "Don't have an account? " : "Already have an account? "}
           </span>
-          <button 
-            type="button" 
+          <button
+            type="button"
             className="toggle-link-btn"
             onClick={handleToggle}
             disabled={loading}

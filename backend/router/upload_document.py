@@ -9,7 +9,7 @@ from service.vectorstore import vectorDB
 router = APIRouter()
 
 
-@router.post("/api/upload_document")
+@router.post("/api/upload_document",tags=["Document"])
 async def upload_documents(
     document: UploadFile = File(...),
     db: Session = Depends(get_session),

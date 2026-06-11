@@ -6,7 +6,7 @@ from service.password_hash import hash_password
 from sqlmodel import select
 router=APIRouter()
 
-@router.post("/api/register")
+@router.post("/api/register",tags=["User"])
 def create_user(request:Create_user_schema,db:Session=Depends(get_session)):
     try:    
             existing_user = db.exec(select(User_table).where(User_table.email == request.email)).first()

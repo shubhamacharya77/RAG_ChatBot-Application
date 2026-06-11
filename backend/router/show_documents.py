@@ -5,7 +5,7 @@ from service.jwt_token import get_current_user
 from sqlmodel import select
 router=APIRouter()
 
-@router.get("/api/show_documents")
+@router.get("/api/show_documents",tags=["Document"])
 def show_documents(current_user=Depends(get_current_user),db:Session=Depends(get_session)):
     try:
         documents=db.exec(select(Document_table).where(Document_table.user_id==current_user["user_id"])).all()

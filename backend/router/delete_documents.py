@@ -7,7 +7,7 @@ from sqlmodel import select
 import os 
 router=APIRouter()
 
-@router.delete("/api/delete_document")
+@router.delete("/api/delete_document",tags=["Document"])
 def delete_document(document_id:int,current_user=Depends(get_current_user),db:Session=Depends(get_session)):
     try:
         deleted_document = db.exec(

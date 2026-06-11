@@ -5,5 +5,8 @@ from service.models import embedding_model
 vectorDB=Chroma(
     collection_name="Documents",
     persist_directory="Documents",
-    embedding_function=embedding_model
+    embedding_function=embedding_model,
+    collection_metadata={
+    "hnsw:space": "cosine"
+}
 )

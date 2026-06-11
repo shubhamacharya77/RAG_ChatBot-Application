@@ -7,7 +7,7 @@ from service.jwt_token import create_access_token
 from sqlmodel import select
 router=APIRouter()
 
-@router.post("/api/login")
+@router.post("/api/login",tags=["User"])
 def login_user(request:Login_user_schema,db:Session=Depends(get_session)):
     try:
         user=db.exec(select(User_table).where(User_table.email==request.email)).first()
@@ -21,10 +21,11 @@ def login_user(request:Login_user_schema,db:Session=Depends(get_session)):
         payload={
             "sub":user.user_name,
             "email":user.email,
-            "user_id":user.id
+            "user_id":user.id,
         }
         return{
             "message":"login successfull",
+            "user_name":user.user_name,
             "token":create_access_token(payload)
         }
     except Exception as e: 

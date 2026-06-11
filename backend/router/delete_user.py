@@ -9,7 +9,7 @@ from service.jwt_token import get_current_user
 import os
 router=APIRouter()
 
-@router.delete("/api/delete_user")
+@router.delete("/api/delete_user",tags=["User"])
 def delete_user(request:Delete_user_schema,db:Session=Depends(get_session),current_user=Depends(get_current_user)):
     try:
         user=db.exec(select(User_table).where(User_table.email==current_user["email"])).first()
